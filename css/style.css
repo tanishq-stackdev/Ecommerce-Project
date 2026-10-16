@@ -1,0 +1,1389 @@
+/* =========================================================
+   STORE — DISCOVERY UI
+   Designed for exploration, interaction and depth
+   Works with existing Tailwind + main.js
+   ========================================================= */
+
+:root {
+    --bg: #eef2f5;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+
+    --text: #0f172a;
+    --text-soft: #64748b;
+    --text-muted: #94a3b8;
+
+    --border: #dde4ea;
+    --border-hover: #c7d2da;
+
+    --accent: #0f766e;
+    --accent-dark: #115e59;
+    --accent-light: #e6f7f4;
+
+    --danger: #dc2626;
+
+    --radius: 14px;
+
+    --shadow-card:
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 8px 25px rgba(15, 23, 42, 0.05);
+
+    --shadow-hover:
+        0 2px 4px rgba(15, 23, 42, 0.05),
+        0 18px 45px rgba(15, 23, 42, 0.11);
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(circle at 15% 0%,
+            rgba(15, 118, 110, 0.06),
+            transparent 28%),
+        radial-gradient(circle at 85% 15%,
+            rgba(59, 130, 246, 0.045),
+            transparent 25%),
+        var(--bg);
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    line-height: 1.5;
+
+    -webkit-font-smoothing: antialiased;
+
+    overflow-x: hidden;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   CUSTOM SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e9eef2;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #b9c5ce;
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8fa0ab;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    background: rgba(255, 255, 255, 0.86) !important;
+    border-bottom: 1px solid rgba(203, 213, 225, 0.8);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    transition:
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+}
+
+header:hover {
+    background: rgba(255, 255, 255, 0.94) !important;
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+header .text-2xl,
+header .text-3xl {
+    letter-spacing: -0.055em;
+
+    transition:
+        letter-spacing 0.25s ease,
+        transform 0.25s ease;
+}
+
+header .text-2xl:hover,
+header .text-3xl:hover {
+    letter-spacing: -0.035em;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+nav a {
+    position: relative;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+nav a:hover {
+    transform: translateY(-1px);
+    color: var(--accent);
+}
+
+/* little navigation underline */
+
+nav a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -7px;
+
+    width: 0;
+    height: 2px;
+
+    border-radius: 99px;
+
+    background: var(--accent);
+
+    transform: translateX(-50%);
+
+    transition: width 0.22s ease;
+}
+
+nav a:hover::after {
+    width: 18px;
+}
+
+
+/* =========================================================
+   COUNTERS
+   ========================================================= */
+
+#wishlist-count,
+#cart-count {
+    min-width: 19px;
+    height: 19px;
+
+    padding: 0 5px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 100px;
+
+    background: #0f172a;
+    color: white;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+#wishlist-count:hover,
+#cart-count:hover {
+    transform: scale(1.15);
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main {
+    position: relative;
+    width: 100%;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+#search-input {
+    min-height: 48px;
+
+    padding: 0 16px 0 42px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    color: var(--text);
+
+    outline: none;
+
+    box-shadow:
+        0 2px 5px rgba(15, 23, 42, 0.02);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+#search-input::placeholder {
+    color: #9aa7b1;
+}
+
+#search-input:hover {
+    border-color: var(--border-hover);
+}
+
+#search-input:focus {
+    border-color: rgba(15, 118, 110, 0.65);
+
+    box-shadow:
+        0 0 0 4px rgba(15, 118, 110, 0.08),
+        0 8px 25px rgba(15, 118, 110, 0.05);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SEARCH BUTTON
+   ========================================================= */
+
+button[type="submit"] {
+    position: relative;
+    overflow: hidden;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.22s ease,
+        background-color 0.22s ease;
+}
+
+button[type="submit"]::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(100deg,
+            transparent,
+            rgba(255, 255, 255, 0.18),
+            transparent);
+
+    transform: skewX(-18deg);
+
+    transition: left 0.5s ease;
+}
+
+button[type="submit"]:hover::before {
+    left: 140%;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 22px rgba(15, 118, 110, 0.16);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0) scale(0.98);
+}
+
+
+/* =========================================================
+   CATEGORY FILTERS
+   ========================================================= */
+
+#category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#category-filters button {
+    position: relative;
+
+    padding: 7px 13px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    color: var(--text-soft);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#category-filters button:hover {
+    transform: translateY(-2px);
+
+    border-color: #b9c8cc;
+
+    background: white;
+
+    color: var(--text);
+
+    box-shadow:
+        0 5px 15px rgba(15, 23, 42, 0.06);
+}
+
+#category-filters button:active {
+    transform: translateY(0) scale(0.97);
+}
+
+#category-filters button.active,
+#category-filters button.bg-teal-600 {
+    background: var(--accent);
+    border-color: var(--accent);
+
+    color: white;
+
+    box-shadow:
+        0 5px 15px rgba(15, 118, 110, 0.17);
+}
+
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+#products-container {
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   PRODUCT CARD
+   ========================================================= */
+
+#products-container>article {
+    position: relative;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow-card);
+
+    isolation: isolate;
+
+    transition:
+        transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.25s ease,
+        box-shadow 0.28s ease;
+}
+
+
+/* hover lift */
+
+#products-container>article:hover {
+    transform: translateY(-7px);
+
+    border-color: #ccd7dc;
+
+    box-shadow: var(--shadow-hover);
+}
+
+
+/* =========================================================
+   PRODUCT CARD LIGHT SWEEP
+   ========================================================= */
+
+#products-container>article::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    z-index: 5;
+
+    pointer-events: none;
+
+    background: linear-gradient(105deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.35) 50%,
+            transparent 80%);
+
+    transform: skewX(-15deg);
+
+    transition: left 0.65s ease;
+}
+
+#products-container>article:hover::before {
+    left: 130%;
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE AREA
+   ========================================================= */
+
+#products-container>article img {
+    width: 100%;
+
+    object-fit: contain;
+
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.3s ease;
+}
+
+#products-container>article:hover img {
+    transform: scale(1.07) translateY(-2px);
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE "DISCOVERY" EFFECT
+   ========================================================= */
+
+#products-container>article .aspect-square,
+#products-container>article .h-48,
+#products-container>article .h-56 {
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   PRODUCT TITLE
+   ========================================================= */
+
+#products-container>article a {
+    transition: color 0.2s ease;
+}
+
+#products-container>article a:hover {
+    color: var(--accent);
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   PRODUCT BUTTONS
+   ========================================================= */
+
+#products-container button {
+    position: relative;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+#products-container button:hover {
+    transform: translateY(-2px);
+}
+
+#products-container button:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================================================
+   PRODUCT DETAILS
+   ========================================================= */
+
+#product-detail-container {
+    max-width: 1180px;
+    margin: auto;
+}
+
+#product-detail-container img {
+    transition:
+        transform 0.4s ease,
+        filter 0.3s ease;
+}
+
+#product-detail-container img:hover {
+    transform: scale(1.025);
+}
+
+
+/* =========================================================
+   DETAIL ACTIONS
+   ========================================================= */
+
+#add-to-cart-btn,
+#add-to-wishlist-btn {
+    position: relative;
+
+    min-height: 46px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.22s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+#add-to-cart-btn::after,
+#add-to-wishlist-btn::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: linear-gradient(110deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.16),
+            transparent 70%);
+
+    transform: translateX(-100%);
+
+    transition: transform 0.5s ease;
+
+    pointer-events: none;
+}
+
+#add-to-cart-btn:hover::after,
+#add-to-wishlist-btn:hover::after {
+    transform: translateX(100%);
+}
+
+#add-to-cart-btn:hover,
+#add-to-wishlist-btn:hover {
+    transform: translateY(-2px);
+}
+
+#add-to-cart-btn:active,
+#add-to-wishlist-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   QUANTITY
+   ========================================================= */
+
+#qty-minus,
+#qty-plus {
+    width: 40px;
+    height: 40px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+
+    background: white;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.16s ease;
+}
+
+#qty-minus:hover,
+#qty-plus:hover {
+    background: var(--surface-2);
+
+    border-color: var(--border-hover);
+
+    transform: scale(1.05);
+}
+
+#qty-minus:active,
+#qty-plus:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   WISHLIST
+   ========================================================= */
+
+#wishlist-container {
+    position: relative;
+}
+
+
+/* wishlist image */
+
+#wishlist-container img {
+    transition:
+        transform 0.35s ease;
+}
+
+#wishlist-container a:hover img {
+    transform: scale(1.07);
+}
+
+
+/* wishlist buttons */
+
+.wishlist-add-cart-btn,
+.wishlist-remove-btn {
+    min-height: 38px;
+
+    transition:
+        transform 0.18s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.wishlist-add-cart-btn:hover,
+.wishlist-remove-btn:hover {
+    transform: translateY(-2px);
+}
+
+.wishlist-add-cart-btn:active,
+.wishlist-remove-btn:active {
+    transform: scale(0.97);
+}
+
+.wishlist-remove-btn:hover {
+    color: var(--danger);
+}
+
+
+/* =========================================================
+   CART
+   ========================================================= */
+
+#cart-container {
+    position: relative;
+}
+
+.cart-qty-minus,
+.cart-qty-plus {
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    transition:
+        transform 0.16s ease,
+        background-color 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.cart-qty-minus:hover,
+.cart-qty-plus:hover {
+    transform: scale(1.05);
+
+    background: var(--surface-2);
+
+    border-color: var(--border-hover);
+}
+
+.cart-qty-minus:active,
+.cart-qty-plus:active {
+    transform: scale(0.92);
+}
+
+.cart-wishlist-btn,
+.cart-remove-btn {
+    transition:
+        color 0.18s ease,
+        background-color 0.18s ease,
+        transform 0.16s ease;
+}
+
+.cart-wishlist-btn:hover {
+    color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.cart-remove-btn:hover {
+    color: var(--danger);
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   CHECKOUT
+   ========================================================= */
+
+#checkout-btn {
+    position: relative;
+
+    min-height: 47px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.22s ease;
+}
+
+#checkout-btn::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -110%;
+
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(100deg,
+            transparent,
+            rgba(255, 255, 255, 0.18),
+            transparent);
+
+    transform: skewX(-15deg);
+
+    transition: left 0.55s ease;
+}
+
+#checkout-btn:hover::before {
+    left: 130%;
+}
+
+#checkout-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(15, 118, 110, 0.17);
+}
+
+#checkout-btn:active {
+    transform: scale(0.985);
+}
+
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+.empty-state {
+    min-height: 300px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.empty-state svg {
+    transition:
+        transform 0.35s ease;
+}
+
+.empty-state:hover svg {
+    transform: translateY(-4px);
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading-spinner {
+    width: 30px;
+    height: 30px;
+
+    border: 3px solid #dce5e8;
+    border-top-color: var(--accent);
+
+    border-radius: 50%;
+
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   PRODUCT ENTER ANIMATION
+   ========================================================= */
+
+@keyframes productEnter {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#products-container>article {
+    animation: productEnter 0.45s ease both;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+    animation:
+        toastIn 0.28s ease forwards;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    border-top: 1px solid var(--border);
+
+    background: rgba(255, 255, 255, 0.45);
+}
+
+footer a {
+    transition:
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+footer a:hover {
+    color: var(--accent);
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 3px solid rgba(15, 118, 110, 0.14);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+    background: rgba(15, 118, 110, 0.16);
+    color: var(--text);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    #products-container>article:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-card);
+    }
+
+    #products-container>article:hover img {
+        transform: scale(1.035);
+    }
+
+    nav a::after {
+        display: none;
+    }
+}
+
+
+@media (max-width: 640px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    #search-input {
+        min-height: 45px;
+    }
+
+    #category-filters {
+        gap: 6px;
+    }
+
+    #category-filters button {
+        padding: 6px 11px;
+        font-size: 12px;
+    }
+
+    #products-container>article {
+        border-radius: 12px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* =========================================================
+   NIGHT MODE
+   ========================================================= */
+
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--text-soft);
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.2s ease,
+        box-shadow 0.25s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+
+    background: var(--surface-2);
+    color: var(--accent);
+
+    box-shadow:
+        0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.theme-toggle:active {
+    transform: scale(0.94);
+}
+
+.theme-icon {
+    width: 19px;
+    height: 19px;
+
+    transition:
+        transform 0.4s ease,
+        opacity 0.25s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+    transform: rotate(20deg);
+}
+
+
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+.dark-mode {
+    --bg: #0b0f14;
+    --surface: #111820;
+    --surface-2: #17212b;
+
+    --text: #e7edf3;
+    --text-soft: #9aa9b8;
+    --text-muted: #718092;
+
+    --border: #263442;
+    --border-hover: #3a4a59;
+
+    --accent: #2dd4bf;
+    --accent-dark: #14b8a6;
+    --accent-light: #102c2a;
+
+    --danger: #f87171;
+
+    background:
+        radial-gradient(circle at 15% 0%,
+            rgba(20, 184, 166, 0.08),
+            transparent 28%),
+        radial-gradient(circle at 85% 15%,
+            rgba(59, 130, 246, 0.06),
+            transparent 25%),
+        var(--bg);
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   DARK HEADER
+   ========================================================= */
+
+.dark-mode header {
+    background: rgba(11, 15, 20, 0.88) !important;
+
+    border-bottom-color: #263442;
+
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.dark-mode header:hover {
+    background: rgba(11, 15, 20, 0.96) !important;
+}
+
+
+/* =========================================================
+   DARK TEXT
+   ========================================================= */
+
+.dark-mode .text-slate-900 {
+    color: #f1f5f9 !important;
+}
+
+.dark-mode .text-slate-800 {
+    color: #e2e8f0 !important;
+}
+
+.dark-mode .text-slate-700 {
+    color: #cbd5e1 !important;
+}
+
+.dark-mode .text-slate-600 {
+    color: #94a3b8 !important;
+}
+
+.dark-mode .text-slate-500 {
+    color: #7f8d9d !important;
+}
+
+.dark-mode .text-slate-400 {
+    color: #64748b !important;
+}
+
+
+/* =========================================================
+   DARK SURFACES
+   ========================================================= */
+
+.dark-mode .bg-white {
+    background-color: #111820 !important;
+}
+
+.dark-mode .bg-slate-50 {
+    background-color: #0b0f14 !important;
+}
+
+.dark-mode .bg-slate-100 {
+    background-color: #101820 !important;
+}
+
+
+/* =========================================================
+   DARK BORDERS
+   ========================================================= */
+
+.dark-mode .border-slate-200 {
+    border-color: #263442 !important;
+}
+
+.dark-mode .border-slate-300 {
+    border-color: #344454 !important;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.dark-mode #search-input {
+    background: #111820;
+
+    color: #e7edf3;
+
+    border-color: #2c3b49;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark-mode #search-input::placeholder {
+    color: #718092;
+}
+
+.dark-mode #search-input:hover {
+    border-color: #405364;
+}
+
+.dark-mode #search-input:focus {
+    border-color: rgba(45, 212, 191, 0.7);
+
+    box-shadow:
+        0 0 0 4px rgba(45, 212, 191, 0.08),
+        0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   THEME BUTTON — DARK
+   ========================================================= */
+
+.dark-mode .theme-toggle {
+    background: #111820;
+
+    border-color: #2c3b49;
+
+    color: #cbd5e1;
+}
+
+.dark-mode .theme-toggle:hover {
+    background: #17212b;
+
+    border-color: #3a4a59;
+
+    color: #2dd4bf;
+}
+
+
+/* =========================================================
+   PRODUCT CARDS
+   ========================================================= */
+
+.dark-mode #products-container>article {
+    background: #111820;
+
+    border-color: #263442;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.2),
+        0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+.dark-mode #products-container>article:hover {
+    border-color: #3a4a59;
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+
+/* Product image area */
+
+.dark-mode #products-container>article .bg-white {
+    background: #111820 !important;
+}
+
+
+/* =========================================================
+   CATEGORY BUTTONS
+   ========================================================= */
+
+.dark-mode #category-filters button {
+    background: #111820;
+
+    border-color: #2c3b49;
+
+    color: #aebdca;
+}
+
+.dark-mode #category-filters button:hover {
+    background: #17212b;
+
+    border-color: #405364;
+
+    color: #e7edf3;
+}
+
+.dark-mode #category-filters button.active,
+.dark-mode #category-filters button.bg-teal-600,
+.dark-mode #category-filters button.bg-teal-700 {
+    background: #0f766e !important;
+
+    border-color: #0f766e !important;
+
+    color: white !important;
+}
+
+
+/* =========================================================
+   PRODUCT DETAIL
+   ========================================================= */
+
+.dark-mode #product-detail-container>div {
+    color: #e7edf3;
+}
+
+.dark-mode #product-detail-container .bg-white {
+    background: #111820 !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.dark-mode .border-teal-700 {
+    border-color: #14b8a6 !important;
+}
+
+.dark-mode .text-teal-700 {
+    color: #2dd4bf !important;
+}
+
+.dark-mode .hover\:text-teal-700:hover {
+    color: #2dd4bf !important;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.dark-mode footer {
+    background: #0f151c !important;
+
+    border-color: #263442 !important;
+}
+
+
+/* =========================================================
+   SMOOTH THEME TRANSITION
+   ========================================================= */
+
+body,
+header,
+footer,
+input,
+button,
+article,
+main,
+section,
+nav,
+a,
+div {
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
+}
